@@ -1,5 +1,6 @@
 package com.ibm.ro.tm.apprenticeship.poll.metter.controller;
 
+
 import java.util.List;
 
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,6 +13,7 @@ import com.ibm.ro.tm.apprenticeship.poll.metter.repository.RoleRepository;
 public class RoleController {
 
 	private RoleRepository repository;
+
 
 	public RoleController(RoleRepository repository) {
 		this.repository = repository;
