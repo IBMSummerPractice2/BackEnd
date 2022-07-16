@@ -6,21 +6,13 @@ package com.ibm.ro.tm.apprenticeship.poll.metter.entity;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.SortNatural;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-/**
- * @author O09860826
- *
- */
 @Entity
 public class User implements Comparable<User> {
 
@@ -31,43 +23,51 @@ public class User implements Comparable<User> {
 	@Column
 	private String name;
 
-	@ManyToMany(mappedBy = "users")
+	@Column
+	private Role role;
+
+	@ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+	@JoinTable(name = "user-polls", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "poll_id"))
 	@SortNatural
-	@JsonIgnoreProperties("users")
-	private SortedSet<Role> roles = new TreeSet<Role>();
+	private SortedSet<Poll> polls = new TreeSet<>();
+
+	public User(String name, Role role) {
+		this.name = name;
+		this.role = role;
+	}
 
 	protected User() {
 
 	}
 
-	public User(String name) {
-		this.name = name;
-	}
 
-	/**
-	 * @return the id
-	 */
 	public Long getId() {
 		return id;
 	}
 
-	/**
-	 * @return the name
-	 */
 	public String getName() {
 		return name;
 	}
 
-	/**
-	 * @return the roles
-	 */
-	public SortedSet<Role> getRoles() {
-		return roles;
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public Role getRole() {
+		return role;
+	}
+
+	public void setRole(Role role) {
+		this.role = role;
 	}
 
 	@Override
 	public String toString() {
-		return this.getClass().getSimpleName() + "(" + this.id + ", " + this.name + ")";
+		return "User{" +
+				"id=" + id +
+				", name='" + name + '\'' +
+				", role=" + role +
+				'}';
 	}
 
 	@Override

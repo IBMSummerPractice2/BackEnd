@@ -1,15 +1,12 @@
 package com.ibm.ro.tm.apprenticeship.poll.metter.controller;
-
-import com.ibm.ro.tm.apprenticeship.poll.metter.entity.Poll;
 import com.ibm.ro.tm.apprenticeship.poll.metter.entity.Vote;
-import com.ibm.ro.tm.apprenticeship.poll.metter.repository.PollRepository;
 import com.ibm.ro.tm.apprenticeship.poll.metter.repository.VoteRepository;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.List;
 
 public class VoteController {
-    private VoteRepository repository;
+    private final VoteRepository repository;
 
 
     public  VoteController(VoteRepository repository) {

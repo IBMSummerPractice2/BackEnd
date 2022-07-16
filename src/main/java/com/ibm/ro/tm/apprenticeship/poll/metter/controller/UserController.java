@@ -1,6 +1,3 @@
-/**
- * 
- */
 package com.ibm.ro.tm.apprenticeship.poll.metter.controller;
 
 import java.util.List;
@@ -11,10 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ibm.ro.tm.apprenticeship.poll.metter.entity.User;
 import com.ibm.ro.tm.apprenticeship.poll.metter.repository.UserRepository;
 
-/**
- * @author O09860826
- *
- */
+
 @RestController
 public class UserController {
 
@@ -26,8 +20,6 @@ public class UserController {
 
 	@GetMapping("/users")
 	public List<User> all() {
-		
-		
 		return repository.findAll();
 	}
 

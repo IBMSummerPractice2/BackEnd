@@ -1,19 +1,15 @@
 package com.ibm.ro.tm.apprenticeship.poll.metter.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import org.apache.tomcat.jni.Time;
-import org.hibernate.annotations.SortNatural;
+
 
 import javax.persistence.*;
 import java.security.Timestamp;
-import java.util.Date;
-import java.util.SortedSet;
-import java.util.TreeSet;
+
 
 @Entity
 
-public class Vote {
+public class Vote implements Comparable<Vote>{
     @Id
     private Long idPoll;
     @Column
@@ -23,18 +19,23 @@ public class Vote {
     @Column
     private Long hashID;
     @Column
+    @Transient
     private Timestamp date;
 
     @JsonIgnore
-    @ManyToOne
-    private Poll poll;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name="poll_id",referencedColumnName = "id")
+    private Poll poll= new Poll();
 
-    public Vote(Long idPoll, Integer score, String comment, Long hashID, Timestamp date) {
+    public Poll getPoll() {
+        return poll;
+    }
+
+    public Vote(Long idPoll, Integer score, String comment, Long hashID) {
         this.idPoll = idPoll;
         this.score = score;
         this.comment = comment;
         this.hashID = hashID;
-        this.date = date;
     }
 
     public Vote() {
@@ -82,4 +83,20 @@ public class Vote {
     }
 
 
+    @Override
+    public int compareTo(Vote o) {
+        int result;
+        if (o != null) {
+            if (idPoll != null) {
+                result = idPoll.compareTo(o.getIdPoll());
+            } else if (o.getIdPoll() != null) {
+                result = 1;
+            } else {
+                result = 0;
+            }
+        } else {
+            result = -1;
+        }
+        return result;
+    }
 }

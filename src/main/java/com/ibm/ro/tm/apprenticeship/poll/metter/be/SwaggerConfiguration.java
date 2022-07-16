@@ -1,6 +1,3 @@
-/**
- * 
- */
 package com.ibm.ro.tm.apprenticeship.poll.metter.be;
 
 import org.springframework.context.annotation.Bean;
@@ -10,10 +7,6 @@ import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 
-/**
- * @author O09860826
- *
- */
 public class SwaggerConfiguration {
 	@Bean
 	public Docket api() {
