@@ -28,6 +28,7 @@ public class Poll implements Comparable<Poll>{
 
     @JsonIgnore
     @OneToMany(mappedBy = "poll")
+    @SortNatural
     private SortedSet<Vote> votes = new TreeSet<>();
 
     @ManyToMany(mappedBy = "polls")
