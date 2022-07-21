@@ -5,7 +5,9 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.SortNatural;
 
 import javax.persistence.*;
-import java.security.Timestamp;
+import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
@@ -22,12 +24,13 @@ public class Poll implements Comparable<Poll>{
     @Column
     private String question;
     @Column
-    @Transient
+    //@Transient
     private Timestamp date;
 
 
     @JsonIgnore
     @OneToMany(mappedBy = "poll")
+    @SortNatural
     private SortedSet<Vote> votes = new TreeSet<>();
 
     @ManyToMany(mappedBy = "polls")
@@ -38,6 +41,7 @@ public class Poll implements Comparable<Poll>{
     public Poll( String title, String question) {
         this.title = title;
         this.question = question;
+        this.date = new Timestamp(System.currentTimeMillis());
     }
 
     public Poll() {
@@ -68,6 +72,17 @@ public class Poll implements Comparable<Poll>{
         return date;
     }
 
+    public static Double averageScore(ArrayList<Vote> array)
+    {
+        double average = 0.0;
+
+        for(Vote i: array)
+            average += i.getScore();
+
+        average /= array.size();
+
+        return average;
+    }
 
 
     @Override

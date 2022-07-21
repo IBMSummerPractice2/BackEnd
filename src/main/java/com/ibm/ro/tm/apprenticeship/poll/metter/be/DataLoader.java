@@ -36,7 +36,7 @@ class DataLoader {
 			logger.info("loading poll:" + pollRepository.save(poll1));
 
 			Long num= 1L;
-			Vote vote1= new Vote(num,6,"Primul raspuns",num);
+			Vote vote1= new Vote(num,7,"Primul raspuns",num);
 			logger.info("loading vote:" + voteRepository.save(vote1));
 		};
 	}

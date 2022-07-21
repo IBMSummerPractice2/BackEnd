@@ -4,7 +4,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
 import javax.persistence.*;
-import java.security.Timestamp;
+import java.time.Instant;
+import java.util.Date;
+import java.sql.Timestamp;
 
 
 @Entity
@@ -19,7 +21,7 @@ public class Vote implements Comparable<Vote>{
     @Column
     private Long hashID;
     @Column
-    @Transient
+    //@Transient
     private Timestamp date;
 
     @JsonIgnore
@@ -36,6 +38,8 @@ public class Vote implements Comparable<Vote>{
         this.score = score;
         this.comment = comment;
         this.hashID = hashID;
+        this.date = new Timestamp(System.currentTimeMillis());
+
     }
 
     public Vote() {
