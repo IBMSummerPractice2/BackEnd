@@ -6,22 +6,23 @@ import org.hibernate.annotations.SortNatural;
 
 import javax.persistence.*;
 import java.security.Timestamp;
+import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
 @Entity
-@Table()
+@Table
 public class Poll implements Comparable<Poll>{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column
+    @Column(name = "title")
     private String title;
-    @Column
+    @Column(name = "question")
     private String question;
-    @Column
+    @Column(name ="Create at")
     @Transient
     private Timestamp date;
 
@@ -69,6 +70,19 @@ public class Poll implements Comparable<Poll>{
         return date;
     }
 
+    public void addVoteToPoll(Vote vote){
+        votes.add(vote);
+    }
+
+    @Override
+    public String toString() {
+        return "Poll{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", question='" + question + '\'' +
+                ", date=" + date
+              ;
+    }
 
 
     @Override

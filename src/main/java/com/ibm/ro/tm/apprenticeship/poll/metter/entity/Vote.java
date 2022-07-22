@@ -27,6 +27,7 @@ public class Vote implements Comparable<Vote>{
     @JoinColumn(name="poll_id",referencedColumnName = "id")
     private Poll poll= new Poll();
 
+
     public Poll getPoll() {
         return poll;
     }
@@ -81,6 +82,7 @@ public class Vote implements Comparable<Vote>{
     public void setDate(Timestamp date) {
         this.date = date;
     }
+
 
 
     @Override

@@ -31,6 +31,8 @@ public class User implements Comparable<User> {
 	@SortNatural
 	private SortedSet<Poll> polls = new TreeSet<>();
 
+
+
 	public User(String name, Role role) {
 		this.name = name;
 		this.role = role;
