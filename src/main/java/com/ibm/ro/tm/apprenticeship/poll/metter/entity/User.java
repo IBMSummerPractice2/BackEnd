@@ -29,10 +29,22 @@ public class User implements Comparable<User> {
 	@Column
 	private Role role;
 
+
 	@OneToMany(targetEntity = Vote.class)
 	private List<Vote> userVotes = new ArrayList<>();
 
+	//Option one
+	boolean canVote(Long pollId,User user ){
+		for (Vote v: user.getUserVotes()
+			 ) {
+			if(v.getIdPoll() == pollId)
+				return false;
 
+		}
+		return true;
+	}
+
+//	boolean canSeeResults()
 
 
 	public User(String name, Role role) {
@@ -72,6 +84,9 @@ public class User implements Comparable<User> {
 				", name='" + name + '\'' +
 				", role=" + role +
 				'}';
+	}
+	public List<Vote> getUserVotes() {
+		return userVotes;
 	}
 
 	@Override

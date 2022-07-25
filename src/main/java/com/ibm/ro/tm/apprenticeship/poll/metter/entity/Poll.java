@@ -8,6 +8,7 @@ import java.security.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.SortedSet;
 
 
 @Entity
@@ -88,6 +89,7 @@ public class Poll implements Comparable<Poll>{
         return false;
 
     }
+
 
     @Override
     public int compareTo(Poll o) {

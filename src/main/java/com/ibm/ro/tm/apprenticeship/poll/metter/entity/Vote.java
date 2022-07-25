@@ -13,6 +13,10 @@ import java.time.LocalDateTime;
 @Table
 public class Vote implements Comparable<Vote>{
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column
     private Long idPoll;
     @Column
     private Long hashID;
@@ -32,11 +36,11 @@ public class Vote implements Comparable<Vote>{
 //    private User user = new User();
 
 
-    public Vote(Long idPoll, Integer score, String comment, Long hashID) {
+    public Vote(Long idPoll, Long hashID, Integer score, String comment) {
         this.idPoll = idPoll;
+        this.hashID = hashID;
         this.score = score;
         this.comment = comment;
-        this.hashID = hashID;
     }
 
     public Vote() {
