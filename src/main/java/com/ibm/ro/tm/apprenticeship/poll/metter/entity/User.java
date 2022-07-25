@@ -33,6 +33,8 @@ public class User implements Comparable<User> {
 	private List<Vote> userVotes = new ArrayList<>();
 
 
+
+
 	public User(String name, Role role) {
 		this.name = name;
 		this.role = role;

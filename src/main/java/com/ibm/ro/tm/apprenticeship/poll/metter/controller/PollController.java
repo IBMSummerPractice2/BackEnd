@@ -6,6 +6,7 @@ import com.ibm.ro.tm.apprenticeship.poll.metter.repository.PollRepository;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @RestController
@@ -26,15 +27,21 @@ public class PollController {
 
     @GetMapping("/polls/{id}")
     public Optional<Poll> getPollById(
-            @PathVariable("id") long id
+            @PathVariable long id
     ) {
        return repository.findById(id);
 
     }
 
     @GetMapping("/polls/{title}")
-    public List<Poll> findPollbyTitle(@PathVariable String title){
-        return repository.findByTitle(title);
+    public Poll findPollByTitle(@PathVariable String title){
+        List<Poll> polls =repository.findAll();
+        Poll foundPoll = new Poll();
+        for (Poll p: polls) {
+            if(Objects.equals(p.getTitle(), title))
+                foundPoll = p;
+        }
+        return foundPoll;
     }
 
     @PostMapping("/add-poll")
@@ -57,6 +64,18 @@ public class PollController {
     @DeleteMapping("/delete-poll/{id}")
     public void deletePoll(@PathVariable("id") Long id){
        repository.deleteById(id);
+    }
+
+    @DeleteMapping("/check-for-expiration")
+    public void checkPolls(){
+            List<Poll> polls = repository.findAll();
+        for (Poll p:polls) {
+            if(p.pollExpired(p))
+                repository.delete(p);
+
+        }
+
+        
     }
 
 

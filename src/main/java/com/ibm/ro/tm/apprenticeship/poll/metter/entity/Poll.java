@@ -79,6 +79,15 @@ public class Poll implements Comparable<Poll>{
               ;
     }
 
+    public boolean pollExpired(Poll poll)
+    {
+        LocalDateTime expirationTime= poll.date.plusDays(10);
+
+        if(expirationTime.isBefore(LocalDateTime.now()))
+            return true;
+        return false;
+
+    }
 
     @Override
     public int compareTo(Poll o) {

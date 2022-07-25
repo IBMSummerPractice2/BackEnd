@@ -39,7 +39,10 @@ class DataLoader {
 			Vote vote1= new Vote(num,6,"Primul raspuns",num);
 			logger.info("loading vote:" + voteRepository.save(vote1));
 //			pollRepository.getById(num).addVoteToPoll(vote1);
+
+
 		};
+
 	}
 
 }

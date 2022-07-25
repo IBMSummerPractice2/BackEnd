@@ -1,5 +1,7 @@
 package com.ibm.ro.tm.apprenticeship.poll.metter.be;
 
+import com.ibm.ro.tm.apprenticeship.poll.metter.controller.PollController;
+import com.ibm.ro.tm.apprenticeship.poll.metter.entity.Poll;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
@@ -18,5 +20,8 @@ public class PollMetterBeApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(PollMetterBeApplication.class, args);
+
+
+
 	}
 }
