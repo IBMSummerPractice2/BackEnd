@@ -2,6 +2,7 @@ package com.ibm.ro.tm.apprenticeship.poll.metter.controller;
 
 import com.ibm.ro.tm.apprenticeship.poll.metter.entity.Poll;
 import com.ibm.ro.tm.apprenticeship.poll.metter.repository.PollRepository;
+
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -9,6 +10,7 @@ import java.util.Optional;
 
 @RestController
 public class PollController {
+
     private final PollRepository repository;
 
     public  PollController( PollRepository repository) {
@@ -39,13 +41,21 @@ public class PollController {
     Poll addPoll(
             @RequestBody Poll poll
     ) {
-        return repository.save(new Poll(poll.getTitle(), poll.getQuestion()));
-
+        return repository.save(poll);
     }
+
+//    @PostMapping("/add-poll/{title}/{question}")
+//    Poll addPoll(
+//            @PathVariable String title,
+//            @PathVariable String question
+//    ){
+//       Poll poll= new Poll(title,question);
+//        return repository.save(poll);
+//    }
 
 
     @DeleteMapping("/delete-poll/{id}")
-    public void detelePoll(@PathVariable("id") Long id){
+    public void deletePoll(@PathVariable("id") Long id){
        repository.deleteById(id);
     }
 

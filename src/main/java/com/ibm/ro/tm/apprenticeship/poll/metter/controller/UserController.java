@@ -2,7 +2,6 @@ package com.ibm.ro.tm.apprenticeship.poll.metter.controller;
 
 import java.util.List;
 
-import com.ibm.ro.tm.apprenticeship.poll.metter.entity.Role;
 import org.springframework.web.bind.annotation.*;
 
 import com.ibm.ro.tm.apprenticeship.poll.metter.entity.User;
@@ -25,10 +24,17 @@ public class UserController {
 
 	@PostMapping("/add-user")
 	User addUser(
-			@RequestBody String name,
-			@RequestBody Role role
-	){
-		User user = new User(name,role);
+			@RequestBody User user
+	) {
 		return repository.save(user);
 	}
+
+//	@PostMapping("/add-user/{name}/{role}")
+//	User addUser(
+//			@PathVariable String name,
+//			@PathVariable Role role
+//	){
+//		User user = new User(name,role);
+//		return repository.save(user);
+//	}
 }

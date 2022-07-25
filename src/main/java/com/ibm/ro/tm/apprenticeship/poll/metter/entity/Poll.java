@@ -1,41 +1,36 @@
 package com.ibm.ro.tm.apprenticeship.poll.metter.entity;
+import org.hibernate.annotations.CreationTimestamp;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import org.hibernate.annotations.SortNatural;
 
 import javax.persistence.*;
 import java.security.Timestamp;
+
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.SortedSet;
-import java.util.TreeSet;
+
 
 @Entity
-@Table
 public class Poll implements Comparable<Poll>{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "title")
+    @Column
     private String title;
-    @Column(name = "question")
+    @Column
     private String question;
-    @Column(name ="Create at")
-    @Transient
-    private Timestamp date;
+
+    @Column
+    @CreationTimestamp
+    private LocalDateTime date;
 
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "poll")
-    @SortNatural
-    private SortedSet<Vote> votes = new TreeSet<>();
 
-    @ManyToMany(mappedBy = "polls")
-    @SortNatural
-    @JsonIgnoreProperties("users")
-    private SortedSet<User> users = new TreeSet<>();
+    @OneToMany(targetEntity = Poll.class)
+    private List<Vote> pollVotes = new ArrayList<>();
+
 
     public Poll( String title, String question) {
         this.title = title;
@@ -66,12 +61,12 @@ public class Poll implements Comparable<Poll>{
         this.question = question;
     }
 
-    public Timestamp getDate() {
+    public LocalDateTime getDate() {
         return date;
     }
 
     public void addVoteToPoll(Vote vote){
-        votes.add(vote);
+        pollVotes.add(vote);
     }
 
     @Override

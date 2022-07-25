@@ -3,6 +3,8 @@
  */
 package com.ibm.ro.tm.apprenticeship.poll.metter.entity;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
@@ -14,6 +16,7 @@ import org.hibernate.annotations.SortNatural;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
+
 public class User implements Comparable<User> {
 
 	@Id
@@ -26,11 +29,8 @@ public class User implements Comparable<User> {
 	@Column
 	private Role role;
 
-	@ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
-	@JoinTable(name = "user-polls", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "poll_id"))
-	@SortNatural
-	private SortedSet<Poll> polls = new TreeSet<>();
-
+	@OneToMany(targetEntity = Vote.class)
+	private List<Vote> userVotes = new ArrayList<>();
 
 
 	public User(String name, Role role) {

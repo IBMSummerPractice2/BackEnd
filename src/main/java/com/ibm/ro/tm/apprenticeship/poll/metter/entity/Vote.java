@@ -1,36 +1,36 @@
 package com.ibm.ro.tm.apprenticeship.poll.metter.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.CreationTimestamp;
 
 
 import javax.persistence.*;
 import java.security.Timestamp;
+import java.time.LocalDateTime;
 
 
 @Entity
-
+@Table
 public class Vote implements Comparable<Vote>{
     @Id
     private Long idPoll;
     @Column
+    private Long hashID;
+    @Column
     private Integer score;
     @Column
     private String comment;
+
     @Column
-    private Long hashID;
-    @Column
-    @Transient
-    private Timestamp date;
-
-    @JsonIgnore
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name="poll_id",referencedColumnName = "id")
-    private Poll poll= new Poll();
+    @CreationTimestamp
+    private LocalDateTime date;
 
 
-    public Poll getPoll() {
-        return poll;
-    }
+//    @ManyToOne
+//    private Poll poll= new Poll();
+//    @ManyToOne
+//    private User user = new User();
+
 
     public Vote(Long idPoll, Integer score, String comment, Long hashID) {
         this.idPoll = idPoll;
@@ -73,14 +73,6 @@ public class Vote implements Comparable<Vote>{
 
     public void setHashID(Long hashID) {
         this.hashID = hashID;
-    }
-
-    public Timestamp getDate() {
-        return date;
-    }
-
-    public void setDate(Timestamp date) {
-        this.date = date;
     }
 
 

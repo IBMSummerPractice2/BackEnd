@@ -1,4 +1,5 @@
 package com.ibm.ro.tm.apprenticeship.poll.metter.controller;
+import com.ibm.ro.tm.apprenticeship.poll.metter.entity.Poll;
 import com.ibm.ro.tm.apprenticeship.poll.metter.entity.Vote;
 import com.ibm.ro.tm.apprenticeship.poll.metter.repository.PollRepository;
 
@@ -24,26 +25,23 @@ public class VoteController {
         return repository.findAll();
     }
 
-//    @GetMapping("/votes/{pollId}")
-//    List<Vote> allVotesFromPoll
-//            (
-//                    @PathVariable Long pollId
-//            ){
-//        List<>
-//        pollRepository.getById(pollId).
-//    }
-
     @PostMapping("/add-vote")
-    Vote addPoll(
-            @RequestBody Long userId,
-            @RequestBody Long pollId,
-            @RequestBody Integer score,
-            @RequestBody String comment
-    ){
-        Vote vote= new Vote(pollId,score,comment,userId);
-        pollRepository.getById(pollId).addVoteToPoll(vote);
+    Vote addVote(
+            @RequestBody Vote vote
+    ) {
         return repository.save(vote);
     }
+
+//    @PostMapping("/add-vote/{userId}/{pollId}/{score}/{comment}")
+//    Vote addPoll(
+//            @PathVariable Long userId,
+//            @PathVariable Long pollId,
+//            @PathVariable Integer score,
+//            @PathVariable String comment
+//    ){
+//        Vote vote= new Vote(pollId,score,comment,userId);
+//        return repository.save(vote);
+//    }
 
 
 }
