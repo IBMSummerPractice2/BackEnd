@@ -5,27 +5,33 @@ import com.ibm.ro.tm.apprenticeship.poll.metter.repository.PollRepository;
 
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServlet;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.logging.Logger;
 
 @RestController
+@RequestMapping("/poll")
 public class PollController {
+    private final static Logger logger = Logger.getLogger(PollController.class.getName());
 
     private final PollRepository repository;
+
 
     public  PollController( PollRepository repository) {
 
         this.repository = repository;
     }
 
-    @GetMapping("/polls")
+    @GetMapping("/all")
     public List<Poll> all() {
         return repository.findAll();
     }
 
 
-    @GetMapping("/polls/{id}")
+    @GetMapping("/byId/{id}")
     public Optional<Poll> getPollById(
             @PathVariable long id
     ) {
@@ -33,18 +39,13 @@ public class PollController {
 
     }
 
-    @GetMapping("/polls/{title}")
+    @GetMapping("/byTitle/{title}")
     public Poll findPollByTitle(@PathVariable String title){
-        List<Poll> polls =repository.findAll();
-        Poll foundPoll = new Poll();
-        for (Poll p: polls) {
-            if(Objects.equals(p.getTitle(), title))
-                foundPoll = p;
-        }
-        return foundPoll;
+        return repository.findByTitle(title);
+
     }
 
-    @PostMapping("/add-poll")
+    @PostMapping("/add")
     Poll addPoll(
             @RequestBody Poll poll
     ) {
@@ -61,17 +62,20 @@ public class PollController {
 //    }
 
 
-    @DeleteMapping("/delete-poll/{id}")
+    @DeleteMapping("/{id}")
     public void deletePoll(@PathVariable("id") Long id){
        repository.deleteById(id);
     }
 
-    @DeleteMapping("/check-for-expiration")
-    public void checkPolls(){
-            List<Poll> polls = repository.findAll();
-        for (Poll p:polls) {
-            if(p.pollExpired(p))
-                repository.delete(p);
+    @DeleteMapping("/clean")
+    public List<Poll> checkPolls(){
+//            List<Poll> polls = repository.findAll();
+//        for (Poll p:polls) {
+//            if(p.pollExpired(p))
+//               // repository.delete(p);
+//                logger.info("Poll "+ p +" is deleted");
+       return repository.findWithDateBefore(LocalDateTime.now());
+
 
         }
 
@@ -83,5 +87,5 @@ public class PollController {
 
 
 
-}
+
 
